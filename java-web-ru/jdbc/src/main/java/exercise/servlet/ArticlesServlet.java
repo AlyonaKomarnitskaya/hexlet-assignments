@@ -92,6 +92,7 @@ public class ArticlesServlet extends HttpServlet {
             return;
         }
         request.setAttribute("articles", articles);
+        request.setAttribute("page", normalizedPage);
         // END
         TemplateEngineUtil.render("articles/index.html", request, response);
     }
@@ -111,9 +112,11 @@ public class ArticlesServlet extends HttpServlet {
             statement.setString(1, id);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
+
                 article.put("title", rs.getString("title"));
                 article.put("body", rs.getString("body"));
             }
+
         } catch (SQLException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
@@ -122,6 +125,7 @@ public class ArticlesServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
+
         request.setAttribute("article", article);
         // END
         TemplateEngineUtil.render("articles/show.html", request, response);
