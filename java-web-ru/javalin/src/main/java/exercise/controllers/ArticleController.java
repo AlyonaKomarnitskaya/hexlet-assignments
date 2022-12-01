@@ -89,7 +89,7 @@ public final class ArticleController {
                 .set("category_id", categoryId)
                 .update();
         ctx.sessionAttribute("flash", "Статья успешно изменена");
-        ctx.redirect("articles/delete.html");
+        ctx.redirect("/articles");
         // END
     };
 
