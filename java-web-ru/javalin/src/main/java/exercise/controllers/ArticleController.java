@@ -84,8 +84,8 @@ public final class ArticleController {
         new QArticle()
                 .id.equalTo(id)
                 .asUpdate()
-                .set("title", ctx.fromParam("title"))
-                .set("body", ctx.fromParam("body"))
+                .set("title", ctx.formParam("title"))
+                .set("body", ctx.formParam("body"))
                 .set("category_id", categoryId)
                 .update();
         ctx.sessionAttribute("flash", "Статья успешно изменена");
@@ -107,7 +107,7 @@ public final class ArticleController {
     public static Handler destroyArticle = ctx -> {
         // BEGIN
         long id = ctx.pathParamAsClass("id", Long.class).getOrDefault(null);
-        Article article = new QArticle()
+        new QArticle()
                 .id.equalTo(id)
                 .findOne()
                 .delete();
