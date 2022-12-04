@@ -23,11 +23,10 @@ class AppTest {
 
     // BEGIN
     @BeforeAll
-    void beforeAll() {
+    static void beforeAll() {
         app = App.getApp();
         app.start();
         int port = app.port();
-        db = DBServerInstance.getInstance();
         baseUrl = "http://localhost:" + port;
     }
 
@@ -64,10 +63,8 @@ class AppTest {
                 .email.equalTo("ila@gmail.com")
                 .findOne();
         assertThat(user).isNull();
-        assertThat(response.getBody()).c("Пароль должен содержать не менее 4 символов");
+    }
 
-    }
-    }
     // END
 
     // Между тестами база данных очищается
@@ -108,7 +105,7 @@ class AppTest {
 
     // BEGIN
     @AfterAll
-    void afterAll() {
+    static void afterAll() {
         app.stop();
     }
     // END
