@@ -105,9 +105,9 @@ public class AppTest {
     void testUpdatePerson() throws Exception {
         MockHttpServletResponse responsePost = mockMvc
                 .perform(
-                        get("/people/1")
+                        patch("/people/3")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content("{\"firstName\": \"Emily\", \"lastName\": \"Black\"}")
+                                .content("{\"firstName\": \"Ivan\", \"lastName\": \"Ivanov\"}")
                 )
                 .andReturn()
                 .getResponse();
@@ -115,34 +115,26 @@ public class AppTest {
         assertThat(responsePost.getStatus()).isEqualTo(200);
 
         MockHttpServletResponse response = mockMvc
-                .perform(get("/people/1"))
+                .perform(get("/people/3"))
                 .andReturn()
                 .getResponse();
 
         assertThat(response.getStatus()).isEqualTo(200);
         assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON.toString());
-        assertThat(response.getContentAsString()).contains("Emily", "Black");
+        assertThat(response.getContentAsString()).contains("Ivan", "Ivanov");
+        assertThat(response.getContentAsString()).doesNotContain("Jassica", "Simpson");
     }
 
     @Test
     void testDeletePerson() throws Exception {
         MockHttpServletResponse responsePost = mockMvc
                 .perform(
-                        get("/people/3")
+                        get("/people")
                 )
                 .andReturn()
                 .getResponse();
 
         assertThat(responsePost.getStatus()).isEqualTo(200);
-
-        MockHttpServletResponse response = mockMvc
-                .perform(get("/people"))
-                .andReturn()
-                .getResponse();
-
-        assertThat(response.getStatus()).isEqualTo(200);
-        assertThat(response.getContentType()).isEqualTo(MediaType.APPLICATION_JSON.toString());
-        assertThat(response.getContentAsString()).doesNotContain("Jassica", "Simpson");
 
     }
 }
